@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -10,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title>ThewayShop - Ecommerce Bootstrap 4 HTML Template</title>
+    <title>Freshshop - Ecommerce Bootstrap 4 HTML Template</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -27,6 +31,7 @@
     <link rel="stylesheet" href="css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
+    <!-- try part catégorie -->
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -45,43 +50,55 @@
                 <!-- Start Header Navigation -->
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo" alt=""></a>
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="index.php"><img src="images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                        <li class="dropdown active">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sidebar Shop</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="my-account.php">My Account</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="all.php">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
+                        <?php
+                        if (!empty($_SESSION["email"])) {
+                            echo "<li class='nav-item'><a class='nav-link' href='php/logout.php'>Déconnexion</a></li>";
+                        }
+
+                        if (!empty($_SESSION["role"])) {
+                            if ($_SESSION["role"] == 2) {
+
+                                echo "<li class='nav-item'><a class='nav-link' href='admin.php'>Admin</a></li>";
+                            }
+                        }
+                        ?>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
-                            <a href="cart.html">
-                                <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
-                                <p>My Cart</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <?php
+                if (!empty($_SESSION["email"])) {
+                ?>
+                    <!-- Start Atribute Navigation -->
+                    <div class="attr-nav">
+                        <ul>
+                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                            <li class="side-menu">
+                                <a href="cart.php">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <p>My Cart</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                <?php
+                }
+                ?>
                 <!-- End Atribute Navigation -->
             </div>
             <!-- Start Side Menu -->
@@ -91,17 +108,17 @@
                     <ul class="cart-list">
                         <li>
                             <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Delica omtantur </a></h6>
+                            <h6><a href="#">Carotte doré </a></h6>
                             <p>1x - <span class="price">$80.00</span></p>
                         </li>
                         <li>
                             <a href="#" class="photo"><img src="images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Omnes ocurreret</a></h6>
+                            <h6><a href="#">Pomme en or</a></h6>
                             <p>1x - <span class="price">$60.00</span></p>
                         </li>
                         <li>
                             <a href="#" class="photo"><img src="images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Agam facilisis</a></h6>
+                            <h6><a href="#">patates</a></h6>
                             <p>1x - <span class="price">$40.00</span></p>
                         </li>
                         <li class="total">
@@ -134,10 +151,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>My Account</h2>
+                    <h2>Services</h2>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active">My Account</li>
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Services</li>
                     </ul>
                 </div>
             </div>
@@ -145,42 +162,81 @@
     </div>
     <!-- End All Title Box -->
 
-    <!-- Start My Account  -->
-    <div class="my-account-box-main">
+    <!-- Start Gallery  -->
+    <div class="products-box">
         <div class="container">
-            <div class="my-account-page">
-                <div class="row">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="#"> <i class="fa fa-gift"></i> </a>
-                                </div>
-                                <div class="service-desc">
-                                    <h4>Your Orders</h4>
-                                    <p>Track, return, or buy things again</p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Notre gallerie</h1>
+                        <p>Toutes les photos que l'on à pris de nos produits</p>
                     </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="account-box">
-                            <div class="service-box">
-                                <div class="service-icon">
-                                    <a href="php/login.php"><i class="fa fa-lock"></i> </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <a href="all.php" data-filter="*">All</a>
+                            <?php
+                            require('php/config.php');
+
+                            $query = $db->prepare('SELECT categorie_nom FROM Categorie');
+                            $query->execute();
+                            $data = $query->fetchAll();
+
+                            for ($i = 0; $i < count($data); $i++) {
+                                $appel = $data[$i]["categorie_nom"];
+                                echo "<a href=" . $appel . ".php" . " data-filter=" . $appel . ">" . $appel . "</a>";
+                            }
+                            ?>
+                        </div>
+                        <div>
+                            <?php
+                            $query2 = $db->prepare('SELECT A.article_id, A.article_img, A.article_nom, A.article_prix, A.article_prixSolde, A.article_description, A.article_stock, C.categorie_id FROM Article as A, Categorie as C WHERE A.categorie_id = C.categorie_id AND C.categorie_nom LIKE "Légumes" ORDER BY categorie_id');
+                            $query2->execute();
+                            $data2 = $query2->fetchAll();
+
+                            for ($o = 0; $o < count($data2); $o++) {
+
+                                $articleImg = $data2[$o]["article_img"];
+                                $articleName = $data2[$o]["article_nom"];
+                                $articlePrix = $data2[$o]["article_prix"];
+                                $articlePrixSolde = $data2[$o]["article_prixSolde"];
+                                $articleDescription = $data2[$o]["article_description"];
+                                $articleStock = $data2[$o]["article_stock"];
+                                $articleId = $data2[$o]["article_id"];
+                                $categorieId = $data2[$o]["categorie_id"];
+
+                                echo "
+                                <div>
+                                    <h1>$articleName</h1>
+                                    <img class='img_data' id='$articleId' src='$articleImg' alt=''>
+                                    <p>Prix : $articlePrix € </p>
+                                    <p>Prix en Solde : $articlePrixSolde € </p>
+                                    <a href='shop-detail.php?id=$articleId'>Plus de détails</a>
                                 </div>
-                                <div class="service-desc">
-                                    <h4>Login &amp; security</h4>
-                                    <p>Track, return, or buy things again</p>
-                                </div>
-                            </div>
+                                 ";
+
+                                if (!empty($_SESSION["email"])) {
+                                    echo "
+                                    <div class='price-box-bar mt-2'>
+                                        <div class='cart-and-bay-btn'>
+                                            <a class='btn hvr-hover' href='cart.php?id=$articleId'>Add to cart</a>
+                                        </div>
+                                    </div>
+                                ";
+                                }
+                            }
+
+                            ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--         End My Account -->
+    <!-- End Gallery  -->
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
@@ -189,7 +245,7 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-01.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -197,16 +253,15 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-02.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
-
                 </div>
             </div>
             <div class="item">
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-03.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -214,7 +269,7 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-04.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -222,7 +277,7 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-05.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -230,7 +285,7 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-06.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -238,7 +293,7 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-07.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -246,7 +301,7 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-08.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -254,7 +309,7 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-09.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
@@ -262,13 +317,13 @@
                 <div class="ins-inner-box">
                     <img src="images/instagram-img-05.jpg" alt="" />
                     <div class="hov-in">
-                        <a href="https://www.instagram.com/freshshop755/"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--End Instagram Feed  -->
+    <!-- End Instagram Feed  -->
 
 
     <!-- Start Footer  -->
@@ -290,12 +345,12 @@
                         <div class="footer-top-box">
                             <h3>Newsletter</h3>
                             <form class="newsletter-box">
-                                <di class="form-group">
+                                <div class="form-group">
                                     <input class="" type="email" name="Email" placeholder="Email Address*" />
                                     <i class="fa fa-envelope"></i>
-                                </di v>
-                                <but ton class="btn hvr-hover" type="submit">Submit</but>
-                                </fo rm>
+                                </div>
+                                <button class="btn hvr-hover" type="submit">Submit</button>
+                            </form>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
@@ -317,11 +372,36 @@
                 <hr>
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
-                        <di cl ass="footer-widget">
+                        <div class="footer-widget">
                             <h4>About Freshshop</h4>
                             <p>FreshShop est une équipe qu'adore les fruits et légumes. Leurs goûts, leurs odeurs, leurs formes. Vendeur de fruits et légumes mais avant tout de bonheur. </p>
                             <p>Des produits de qualités salué par les plus grand chef tel que Philippe Etchebest ou Pascal Le Grand Frère.</p>
-                        </di v>
+                        </div>
+                    </div>
+                            <h4>About Freshshop</h4>
+                            <p>FreshShop est une équipe qu'adore les fruits et légumes. Leurs goûts, leurs odeurs, leurs formes. Vendeur de fruits et légumes mais avant tout de bonheur. </p>
+                            <p>Des produits de qualités salué par les plus grand chef tel que Philippe Etchebest ou Pascal Le Grand Frère.</p>
+                        </div>
+                    </div>
+                            <h4>About Freshshop</h4>
+                            <p>FreshShop est une équipe qu'adore les fruits et légumes. Leurs goûts, leurs odeurs, leurs formes. Vendeur de fruits et légumes mais avant tout de bonheur. </p>
+                            <p>Des produits de qualités salué par les plus grand chef tel que Philippe Etchebest ou Pascal Le Grand Frère.</p>
+                        </div>
+                    </div>
+                            <h4>About Freshshop</h4>
+                            <p>FreshShop est une équipe qu'adore les fruits et légumes. Leurs goûts, leurs odeurs, leurs formes. Vendeur de fruits et légumes mais avant tout de bonheur. </p>
+                            <p>Des produits de qualités salué par les plus grand chef tel que Philippe Etchebest ou Pascal Le Grand Frère.</p>
+                        </div>
+                    </div>
+                            <h4>About Freshshop</h4>
+                            <p>FreshShop est une équipe qu'adore les fruits et légumes. Leurs goûts, leurs odeurs, leurs formes. Vendeur de fruits et légumes mais avant tout de bonheur. </p>
+                            <p>Des produits de qualités salué par les plus grand chef tel que Philippe Etchebest ou Pascal Le Grand Frère.</p>
+                        </div>
+                    </div>
+                            <h4>About Freshshop</h4>
+                            <p>FreshShop est une équipe qu'adore les fruits et légumes. Leurs goûts, leurs odeurs, leurs formes. Vendeur de fruits et légumes mais avant tout de bonheur. </p>
+                            <p>Des produits de qualités salué par les plus grand chef tel que Philippe Etchebest ou Pascal Le Grand Frère.</p>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link">
@@ -329,10 +409,10 @@
                             <ul>
                                 <li><a href="#">About Us</a></li>
                                 <li><a href="#">Customer Service</a></li>
-                                <li><a href="# ">Our Sitemap</a></li>
-                                <li><a href="# ">Terms &amp; Conditions</a></li>
-                                <li><a href="# ">Privacy Policy</a></li>
-                                <li><a href="# ">Delivery Information</a></li>
+                                <li><a href="#">Our Sitemap</a></li>
+                                <li><a href="#">Terms &amp; Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Delivery Information</a></li>
                             </ul>
                         </div>
                     </div>
@@ -353,36 +433,35 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
     </footer>
-    <!--             End Footer  -->
+    <!-- End Footer  -->
 
     <!-- Start copyright  -->
-    <di class="footer-copyright">
+    <div class="footer-copyright">
         <p class="footer-company">All Rights Reserved. &copy; 2018 <a href="#">ThewayShop</a> Design By :
-            <a href="https://htm l.design/">html design</a></p>
-    </di v>
-    <!-- End        copyright  -->
+            <a href="https://html.design/">html design</a></p>
+    </div>
+    <!-- End copyright  -->
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
-    <!-- ALL J S FILES -->
+    <!-- ALL JS FILES -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!-- ALL PLUGINS -->
-    <script src="js/jquery.superslid es.min.js"></script>
+    <script src="js/jquery.superslides.min.js"></script>
     <script src="js/bootstrap-select.js"></script>
     <script src="js/inewsticker.js"></script>
     <script src="js/bootsnav.js."></script>
-    <script src="js/images-loded.m in.js"></script>
-    <script src="js/isotope.min. js"></script>
-    <script src="js/owl.carousel.min.js "></script>
-    <script src="js/baguetteBox.mi n.js"></script>
-    <script src="js/form-validator.min. js"></script>
-    <script src="js/contact-form-scrip t.js"></script>
+    <script src="js/images-loded.min.js"></script>
+    <script src="js/isotope.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/baguetteBox.min.js"></script>
+    <script src="js/form-validator.min.js"></script>
+    <script src="js/contact-form-script.js"></script>
     <script src="js/custom.js"></script>
-
 </body>
 
 </html>

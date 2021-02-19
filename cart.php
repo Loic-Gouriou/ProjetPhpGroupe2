@@ -1,5 +1,17 @@
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
+
+session_start();
+
+if (!empty($_SESSION["email"])){
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <!-- Basic -->
 
 <head>
@@ -47,24 +59,31 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="index.php"><img src="images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item "><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sidebar Shop</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="my-account.php">My Account</a></li>
+                        <li class="nav-item"><a class="nav-link" href="all.php">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
+                        <?php
+                        if (!empty($_SESSION["email"])) {
+                            echo "<li class='nav-item'><a class='nav-link' href='php/logout.php'>Déconnexion</a></li>";
+                        }
+
+                        if(!empty($_SESSION["role"])){
+                            if($_SESSION["role"] == 2) {
+
+                                echo "<li class='nav-item'><a class='nav-link' href='admin.php'>Admin</a></li>";
+
+                            }
+                        }
+                        ?>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -75,10 +94,10 @@
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
 
                         <li class="side-menu ">
-                            <a href="cart.html">
+                            <a href="cart.php">
                                 <i class="fa fa-shopping-bag "></i>
-                                <span class="badge ">3</span>
-                                <p>My Cart</p>
+                                
+                                <p class="active">My Cart</p>
                             </a>
                         </li>
 
@@ -159,84 +178,93 @@
                                     <th>Images</th>
                                     <th>Product Name</th>
                                     <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
                                     <th>Remove</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-                                            <img class="img-fluid" src="images/img-pro-01.jpg" alt="" />
-                                        </a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									poireau
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text" action='cart_gestion.php'></td>
-                                    <td class="total-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-                                            <i class="fas fa-times"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-                                            <img class="img-fluid" src="images/img-pro-02.jpg" alt="" />
-                                        </a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									carotte
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 60.0</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-                                            <i class="fas fa-times"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-                                            <img class="img-fluid" src="images/img-pro-03.jpg" alt="" />
-                                        </a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									tomates
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 30.0</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-                                            <i class="fas fa-times"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                <?php
+                                    require_once("php/config.php");
+                                    $userId = $_SESSION["users_id"];
+                                    if(!empty($_GET["id"])) {
+
+                                        $idArticle = $_GET["id"];
+                                    
+                                        $query = $db->prepare("SELECT article_id, article_nom, article_prix, article_prixSolde, article_img, article_description, article_stock, categorie_id FROM Article WHERE article_id = $idArticle");
+                                        $query->execute();
+                                        $data = $query->fetch();
+                                        
+                                        $articleId = $data["article_id"];
+                                        $articleName = $data["article_nom"];
+                                        $articleImg = $data["article_img"];
+                                        $articlePrix = $data["article_prix"];
+                                        $articlePrixSolde = $data["article_prixSolde"];
+                                        
+                                        if(empty($articlePrixSolde)) {
+    
+                                            $articlePrixSolde = $articlePrix;
+    
+                                        }
+    
+                                        $commandeDate = date("Y-m-d"); 
+                                        $categorieId = $data["categorie_id"];
+    
+                                        $query2 = $db->prepare("INSERT INTO Commande (commande_date, article_nom, article_prix, article_prixSolde, article_img, users_id, categorie_id, article_quantite) VALUES (:date, :nom, :prix, :prixSolde, :img, :userId, :categorieId, 1)");
+                                        $query2->bindValue(":date", $commandeDate);
+                                        $query2->bindValue(":nom", $articleName);
+                                        $query2->bindValue(":prix", $articlePrix);
+                                        $query2->bindValue(":prixSolde", $articlePrixSolde);
+                                        $query2->bindValue(":img", $articleImg);
+                                        $query2->bindValue(":userId", $userId);
+                                        $query2->bindValue(":categorieId", $categorieId);
+                                        $query2->execute();
+
+                                        ?>
+                                        <script>
+                                            document.location.href = "cart.php";
+                                        </script>
+                                        <?php
+                                    }
+
+                                    
+                                    // $query3 = $db->prepare("INSERT INTO HistCommande (`users_id`, `commande_id`)
+                                    // VALUES ($histCommandeId, $userId, $commandeId)");
+                                    // $query3->execute();
+
+                                    // $query4 = $db->prepare("INSERT INTO LigneHistCommande 
+                                    // VALUES ($ligneHistCommande_id, $article_nom, $article_prix, $article_prixSolde, $article_img, $histCommande_id, $categorie_id)");
+                                    // $query4->execute();
+
+                                    $query5 = $db->prepare("SELECT * FROM Commande WHERE users_id = $userId");
+                                    $query5->execute();
+                                    $data5 = $query5->fetchAll();
+
+                                    for($j = 0; $j < count($data5); $j++) {
+
+                                        $id = $data5[$j]["users_id"];
+                                        $idCommande = $data5[$j]["commande_id"];
+                                        $img = $data5[$j]["article_img"];
+                                        $name = $data5[$j]["article_nom"];
+                                        $prix = $data5[$j]['article_prix'];
+                                        $prixSolde = $data5[$j]['article_prixSolde'];
+
+                                        if(empty($prixSolde)) {
+    
+                                            $prixSolde = $prix;
+    
+                                        }
+
+                                        echo "
+                                        <tr>
+                                            <td><img class='img_taille' id='$id' src='$img' alt=''></td>
+                                            <td>$name</td>
+                                            <td>Prix : $prixSolde € </td>
+                                            <td><a class = 'btn hvr-hover' href='delete.php?id=$idCommande'>Delete Article</a></td>
+                                        </tr>
+                                        ";
+
+                                    }
+                                    
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -244,57 +272,10 @@
             </div>
 
             <div class="row my-5">
-                <div class="col-lg-6 col-sm-6">
-                    <div class="coupon-box">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control" placeholder="Enter your coupon code" aria-label="Coupon code" type="text">
-                            <div class="input-group-append">
-                                <button class="btn btn-theme" type="button">Apply Coupon</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6">
-                    <div class="update-box">
-                        <input value="Update Cart" type="submit">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row my-5">
                 <div class="col-lg-8 col-sm-12"></div>
                 <div class="col-lg-4 col-sm-12">
-                    <div class="order-box">
-                        <h3>Order summary</h3>
-                        <div class="d-flex">
-                            <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold"> $ 130 </div>
-                        </div>
-                        <div class="d-flex">
-                            <h4>Discount</h4>
-                            <div class="ml-auto font-weight-bold"> $ 40 </div>
-                        </div>
-                        <hr class="my-1">
-                        <div class="d-flex">
-                            <h4>Coupon Discount</h4>
-                            <div class="ml-auto font-weight-bold"> $ 10 </div>
-                        </div>
-                        <div class="d-flex">
-                            <h4>Tax</h4>
-                            <div class="ml-auto font-weight-bold"> $ 2 </div>
-                        </div>
-                        <div class="d-flex">
-                            <h4>Shipping Cost</h4>
-                            <div class="ml-auto font-weight-bold"> Free </div>
-                        </div>
-                        <hr>
-                        <div class="d-flex gr-total">
-                            <h5>Grand Total</h5>
-                            <div class="ml-auto h5"> $ 388 </div>
-                        </div>
-                        <hr> </div>
                 </div>
-                <div class="col-12 d-flex shopping-box"><a href="checkout.html" class="ml-auto btn hvr-hover">Checkout</a> </div>
+                <div class="col-12 d-flex shopping-box"><a href="all.php" class="ml-auto btn hvr-hover">Voir les produits</a> </div>
             </div>
 
         </div>
@@ -504,3 +485,17 @@
 </body>
 
 </html>
+
+<?php
+
+} else {
+
+?>
+
+    <script>
+        document.location.href = "index.php";
+    </script>
+
+<?php
+
+}

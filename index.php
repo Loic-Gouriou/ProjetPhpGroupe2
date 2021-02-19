@@ -1,5 +1,9 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <!-- Basic -->
 
 <head>
@@ -48,41 +52,52 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="index.php"><img src="images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sidebar Shop</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="my-account.php">My Account</a></li>
+                        <li class="nav-item"><a class="nav-link" href="all.php">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
+                        <?php
+                        if (!empty($_SESSION["email"])) {
+                            echo "<li class='nav-item'><a class='nav-link' href='php/logout.php'>Déconnexion</a></li>";
+                        }
+                        if(!empty($_SESSION["role"])){
+                            if($_SESSION["role"] == 2) {
+
+                                echo "<li class='nav-item'><a class='nav-link' href='admin.php'>Admin</a></li>";
+
+                            }
+                        }
+                        ?>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
-                            <a href="cart.html">
-                                <i class="fa fa-shopping-bag "></i>
-                                <span class="badge">3</span>
-                                <p>My Cart</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <?php
+                if (!empty($_SESSION["email"])) {
+                ?>
+                    <div class="attr-nav">
+                        <ul>
+                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                            <li class="side-menu">
+                                <a href="cart.php">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <p>My Cart</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                <?php
+                }
+                ?>
                 <!-- End Atribute Navigation -->
             </div>
             <!-- Start Side Menu -->
@@ -138,8 +153,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
+                            <h1 class="m-b-20"><strong>Bienvenue sur <br> Freshshop</strong></h1>
+                            <p class="m-b-40">Le meilleur site pour acheter c'est fruit à l'unité, <br> sacher que nos Abricots confits sont les meilleurs du marchés.</p>
                             <p><a class="btn hvr-hover" href="#">Shop New</a></p>
                         </div>
                     </div>
@@ -150,8 +165,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
+                            <h1 class="m-b-20"><strong>Bienvenue sur <br> Freshshop</strong></h1>
+                            <p class="m-b-40">Le meilleur site pour acheter c'est fruit à l'unité, <br> sacher que nos Abricots confits sont les meilleurs du marchés.</p>
                             <p><a class="btn hvr-hover" href="#">Shop New</a></p>
                         </div>
                     </div>
@@ -162,8 +177,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
+                            <h1 class="m-b-20"><strong>Bienvenue sur <br> Freshshop</strong></h1>
+                            <p class="m-b-40">Le meilleur site pour acheter c'est fruit à l'unité, <br> sacher que nos Abricots confits sont les meilleurs du marchés.</p>
                             <p><a class="btn hvr-hover" href="#">Shop New</a></p>
                         </div>
                     </div>

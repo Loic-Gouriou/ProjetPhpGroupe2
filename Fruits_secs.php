@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <!-- Basic -->
@@ -48,41 +51,54 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="index.php"><img src="images/logo.png" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sidebar Shop</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item active"><a class="nav-link" href="gallery.php">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.php">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="my-account.php">My Account</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="all.php">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact-us.php">Contact Us</a></li>
+                        <?php
+                        if (!empty($_SESSION["email"])) {
+                            echo "<li class='nav-item'><a class='nav-link' href='php/logout.php'>Déconnexion</a></li>";
+                        }
+
+                        if(!empty($_SESSION["role"])){
+                            if($_SESSION["role"] == 2) {
+
+                                echo "<li class='nav-item'><a class='nav-link' href='admin.php'>Admin</a></li>";
+
+                            }
+                        }
+                        ?>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
-                            <a href="cart.html">
-                                <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
-                                <p>My Cart</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <?php
+                if (!empty($_SESSION["email"])) {
+                ?>
+                    <!-- Start Atribute Navigation -->
+                    <div class="attr-nav">
+                        <ul>
+                            <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                            <li class="side-menu">
+                                <a href="cart.php">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <p>My Cart</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                <?php
+                }
+                ?>
                 <!-- End Atribute Navigation -->
             </div>
             <!-- Start Side Menu -->
@@ -161,10 +177,9 @@
                 <div class="col-lg-12">
                     <div class="special-menu text-center">
                         <div class="button-group filter-button-group">
-                            <button href="all" class="active" data-filter="*">All</button>
+                            <a href="all.php" class="active" data-filter="*">All</a>
                             <?php  
                                require('php/config.php');
-                               require('gallery_utils.php');
 
                                $query = $db->prepare('SELECT categorie_nom FROM Categorie');
                                $query->execute();
@@ -172,36 +187,49 @@
 
                                for($i = 0; $i < count($data); $i++) {
                                    $appel = $data[$i]["categorie_nom"];
-                                    echo"<button href=".$appel." data-filter=".$appel.">".$appel."</button>";
-                                    utils_img($appel, $i);
+                                    echo"
+                                    <a href=".$appel.".php"." data-filter=".$appel.">".$appel."</a>
+                                    ";
                                }
                             ?>
                         </div>
                         <div>
-                            <?php 
-                            $query2 = $db->prepare('SELECT article_img , categorie_id FROM Article ORDER BY categorie_id');
+                        <?php 
+                            $query2 = $db->prepare('SELECT A.article_id, A.article_img, A.article_nom, A.article_prix, A.article_prixSolde, A.article_description, A.article_stock, C.categorie_id FROM Article as A, Categorie as C WHERE A.categorie_id = C.categorie_id AND C.categorie_nom LIKE "Fruits_secs" ORDER BY categorie_id');
                             $query2->execute();
                             $data2 = $query2->fetchAll();
-                           
-                            $i = 0;
-                            while($i < count($data2)){
-                                $appel2 = $data2[$i]["categorie_id"];
-                                if($appel2 == 4){
-                                    $appel2 = "confit";
-                                }
-                                if($appel2 == 3){
-                                    $appel2 = "secs";
-                                }
-                                if($appel2 == 2){
-                                    $appel2 = "legumes";
-                                }
-                                if($appel2 == 1){
-                                    $appel2 = "fruit";
-                                }
-                             echo '<img class="img_data" id="'.$appel2.'" src="'.$data2[$i]["article_img"].'" alt="">';
-                             $i++;
-                            }
 
+                            for ($o = 0; $o < count($data2); $o++) {
+
+                                $articleImg = $data2[$o]["article_img"];
+                                $articleName = $data2[$o]["article_nom"];
+                                $articlePrix = $data2[$o]["article_prix"];
+                                $articlePrixSolde = $data2[$o]["article_prixSolde"];
+                                $articleDescription = $data2[$o]["article_description"];
+                                $articleStock = $data2[$o]["article_stock"];
+                                $articleId = $data2[$o]["article_id"];
+                                $categorieId = $data2[$o]["categorie_id"];
+
+                                echo "
+                                <div>
+                                    <h1>$articleName</h1>
+                                    <img class='img_data' id='$articleId' src='$articleImg' alt=''>
+                                    <p>Prix : $articlePrix € </p>
+                                    <p>Prix en Solde : $articlePrixSolde € </p>
+                                    <a href='shop-detail.php?id=$articleId'>Plus de détails</a>
+                                </div>
+                                 ";
+
+                                if (!empty($_SESSION["email"])) {
+                                    echo "
+                                    <div class='price-box-bar mt-2'>
+                                        <div class='cart-and-bay-btn'>
+                                            <a class='btn hvr-hover' href='cart.php?id=$articleId'>Add to cart</a>
+                                        </div>
+                                    </div>
+                                ";
+                                }
+                            }
                             ?>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once('config.php');
 
@@ -28,11 +29,11 @@ $data = $query->fetch();
 
 var_dump($data);
 
-// if ($data) {
+if ($data) {
 
-//     header("Location: register.php");
+    header("Location: register.php");
 
-// } else {
+} else {
 
 if (isset($nom, $prenom, $email, $password)) {
 
@@ -50,5 +51,5 @@ if (isset($nom, $prenom, $email, $password)) {
 
     header("Location: login.php");
 
-    // }
+    }
 }
